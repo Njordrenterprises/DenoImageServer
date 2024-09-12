@@ -1,7 +1,7 @@
 import { extname } from "@std/path";
 import { contentType } from "@std/media-types";
 
-const IMAGES_DIR = "./images";
+const IMAGES_DIR = "./user_uploads";
 
 // Check if the images directory exists
 try {

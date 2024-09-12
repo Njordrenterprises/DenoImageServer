@@ -7,6 +7,7 @@ import * as $_app from "./routes/_app.tsx";
 import * as $api_create from "./routes/api/create.ts";
 import * as $api_folder_create from "./routes/api/folder/create.ts";
 import * as $api_folder_delete from "./routes/api/folder/delete.ts";
+import * as $api_images_path_ from "./routes/api/images/[...path].ts";
 import * as $api_images_name_ from "./routes/api/images/[name].ts";
 import * as $api_list from "./routes/api/list.ts";
 import * as $api_upload from "./routes/api/upload.ts";
@@ -23,6 +24,7 @@ const manifest = {
     "./routes/api/create.ts": $api_create,
     "./routes/api/folder/create.ts": $api_folder_create,
     "./routes/api/folder/delete.ts": $api_folder_delete,
+    "./routes/api/images/[...path].ts": $api_images_path_,
     "./routes/api/images/[name].ts": $api_images_name_,
     "./routes/api/list.ts": $api_list,
     "./routes/api/upload.ts": $api_upload,

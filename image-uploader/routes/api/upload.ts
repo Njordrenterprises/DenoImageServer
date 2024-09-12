@@ -1,7 +1,7 @@
 import { Handlers } from "$fresh/server.ts";
 import { ensureDir } from "https://deno.land/std@0.216.0/fs/ensure_dir.ts";
 
-const IMAGES_DIR = "./static/images";
+const IMAGES_DIR = "./user_uploads";
 
 export const handler: Handlers = {
   async POST(req) {

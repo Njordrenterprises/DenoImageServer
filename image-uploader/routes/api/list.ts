@@ -2,7 +2,7 @@ import { Handlers } from "$fresh/server.ts";
 import { walk } from "https://deno.land/std@0.216.0/fs/walk.ts";
 import { join, relative } from "https://deno.land/std@0.216.0/path/mod.ts";
 
-const IMAGES_DIR = "./static/images";
+const IMAGES_DIR = "./user_uploads";
 
 export const handler: Handlers = {
   async GET(req) {
