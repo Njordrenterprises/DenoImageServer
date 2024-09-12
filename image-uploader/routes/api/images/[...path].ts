@@ -1,6 +1,6 @@
 import { Handlers } from "$fresh/server.ts";
 import { join } from "https://deno.land/std@0.210.0/path/mod.ts";
-import { getImageMimeType } from "../../../../utils/imageUtils.ts";
+import { getImageMimeType } from "../../../utils/imageUtils.ts";
 
 const IMAGES_DIR = "./user_uploads";
 
