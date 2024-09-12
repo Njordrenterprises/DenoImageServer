@@ -1,6 +1,7 @@
 import { Handlers } from "$fresh/server.ts";
 import { walk } from "https://deno.land/std@0.216.0/fs/walk.ts";
 import { join, relative } from "https://deno.land/std@0.216.0/path/mod.ts";
+import { isImageFile } from "../../../utils/imageUtils.ts";
 
 const IMAGES_DIR = "./user_uploads";
 
@@ -19,6 +20,7 @@ export const handler: Handlers = {
           name: entry.name,
           isDirectory: entry.isDirectory,
           path: relativePath,
+          isImage: !entry.isDirectory && isImageFile(entry.name),
         });
       }
       return new Response(JSON.stringify(items), {

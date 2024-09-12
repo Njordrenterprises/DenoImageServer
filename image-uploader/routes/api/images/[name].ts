@@ -2,10 +2,10 @@ import { Handlers } from "$fresh/server.ts";
 import { extname } from "$std/path/mod.ts";
 import { contentType } from "$std/media_types/mod.ts";
 
-const IMAGES_DIR = "./static/images";
+const IMAGES_DIR = "./user_uploads";
 
 export const handler: Handlers = {
-  async GET(req, ctx) {
+  async GET(_req, ctx) {
     const imageName = ctx.params.name;
     const imagePath = `${IMAGES_DIR}/${imageName}`;
 

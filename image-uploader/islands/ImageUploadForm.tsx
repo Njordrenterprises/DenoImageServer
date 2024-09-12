@@ -6,6 +6,7 @@ interface Item {
   name: string;
   isDirectory: boolean;
   path: string;
+  isImage: boolean;
 }
 
 export default function ImageUploadForm() {
@@ -29,6 +30,7 @@ export default function ImageUploadForm() {
       const response = await fetch(`/api/list?path=${encodeURIComponent(currentPath)}`);
       if (response.ok) {
         const itemList = await response.json();
+        console.log("Fetched items:", itemList);
         setItems(itemList);
       } else {
         const errorData = await response.json();
@@ -97,7 +99,7 @@ export default function ImageUploadForm() {
       if (response.ok) {
         setMessage("Images uploaded successfully");
         setFiles([]);
-        fetchItems();
+        await fetchItems(); // Refresh the items list
       } else {
         setMessage("Failed to upload images");
       }
@@ -123,7 +125,7 @@ export default function ImageUploadForm() {
       if (response.ok) {
         setMessage("Folder created successfully");
         setNewFolderName("");
-        fetchItems();
+        await fetchItems(); // Refresh the items list
       } else {
         setMessage("Failed to create folder");
       }
@@ -242,23 +244,36 @@ export default function ImageUploadForm() {
 
       <h2 class="text-2xl font-bold mb-4">Folders and Images</h2>
       <div class="grid grid-cols-3 gap-4">
-        {items
-          .filter(item => item.name !== "images" && item.path !== currentPath && !item.path.startsWith(`${currentPath}/`))
-          .map((item) => (
-            <div key={item.path} class="border rounded-lg overflow-hidden">
-              {item.isDirectory ? (
-                <div class="p-4 cursor-pointer" onClick={() => navigateFolder(item.path)}>
-                  <p class="font-bold">{item.name}</p>
-                  <p class="text-sm text-gray-500">Folder</p>
-                </div>
-              ) : (
-                <>
-                  <img src={`/api/images/${item.path}`} alt={item.name} class="w-full h-48 object-cover" />
-                  <p class="p-2 text-sm text-center">{item.name}</p>
-                </>
-              )}
-            </div>
-          ))}
+        {items.map((item) => (
+          <div key={item.path} class="border rounded-lg overflow-hidden">
+            {item.isDirectory ? (
+              <div class="p-4 cursor-pointer" onClick={() => navigateFolder(item.name)}>
+                <p class="font-bold">{item.name}</p>
+                <p class="text-sm text-gray-500">Folder</p>
+              </div>
+            ) : item.isImage ? (
+              <div class="relative w-full h-48">
+                <img 
+                  src={`/api/images/${encodeURIComponent(item.path).replace(/%2F/g, '/')}`}
+                  alt={item.name} 
+                  class="w-full h-full object-cover" 
+                  onError={(e) => {
+                    console.error(`Error loading image: ${item.path}`);
+                    console.error(`Image URL: ${e.currentTarget.src}`);
+                    e.currentTarget.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"%3E%3Crect width="100" height="100" fill="%23f0f0f0"/%3E%3Ctext x="50" y="50" font-family="Arial" font-size="14" fill="%23999" text-anchor="middle" dy=".3em"%3EImage not available%3C/text%3E%3C/svg%3E';
+                  }}
+                  onLoad={() => console.log(`Image loaded successfully: ${item.path}`)}
+                />
+                <p class="p-2 text-sm text-center">{item.name}</p>
+              </div>
+            ) : (
+              <div class="p-4">
+                <p class="font-bold">{item.name}</p>
+                <p class="text-sm text-gray-500">File</p>
+              </div>
+            )}
+          </div>
+        ))}
       </div>
       {currentPath && (
         <div class="mt-4 flex justify-end">
