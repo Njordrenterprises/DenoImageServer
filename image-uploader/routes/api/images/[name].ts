@@ -2,7 +2,7 @@ import { Handlers } from "$fresh/server.ts";
 import { extname } from "$std/path/mod.ts";
 import { contentType } from "$std/media_types/mod.ts";
 
-const IMAGES_DIR = "./images";
+const IMAGES_DIR = "./static/images";
 
 export const handler: Handlers = {
   async GET(req, ctx) {

@@ -4,11 +4,15 @@
 
 import * as $_404 from "./routes/_404.tsx";
 import * as $_app from "./routes/_app.tsx";
+import * as $api_create from "./routes/api/create.ts";
+import * as $api_folder_create from "./routes/api/folder/create.ts";
+import * as $api_folder_delete from "./routes/api/folder/delete.ts";
 import * as $api_images_name_ from "./routes/api/images/[name].ts";
 import * as $api_list from "./routes/api/list.ts";
 import * as $api_upload from "./routes/api/upload.ts";
 import * as $greet_name_ from "./routes/greet/[name].tsx";
 import * as $index from "./routes/index.tsx";
+import * as $BreadcrumbNavigation from "./islands/BreadcrumbNavigation.tsx";
 import * as $ImageUploadForm from "./islands/ImageUploadForm.tsx";
 import { type Manifest } from "$fresh/server.ts";
 
@@ -16,6 +20,9 @@ const manifest = {
   routes: {
     "./routes/_404.tsx": $_404,
     "./routes/_app.tsx": $_app,
+    "./routes/api/create.ts": $api_create,
+    "./routes/api/folder/create.ts": $api_folder_create,
+    "./routes/api/folder/delete.ts": $api_folder_delete,
     "./routes/api/images/[name].ts": $api_images_name_,
     "./routes/api/list.ts": $api_list,
     "./routes/api/upload.ts": $api_upload,
@@ -23,6 +30,7 @@ const manifest = {
     "./routes/index.tsx": $index,
   },
   islands: {
+    "./islands/BreadcrumbNavigation.tsx": $BreadcrumbNavigation,
     "./islands/ImageUploadForm.tsx": $ImageUploadForm,
   },
   baseUrl: import.meta.url,
