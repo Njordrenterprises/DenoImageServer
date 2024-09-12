@@ -6,22 +6,30 @@ const IMAGES_DIR = "./images";
 export const handler: Handlers = {
   async POST(req) {
     const form = await req.formData();
-    const file = form.get("image") as File;
+    const files = form.getAll("images") as File[];
 
-    if (!file) {
-      return new Response("No file uploaded", { status: 400 });
+    if (files.length === 0) {
+      return new Response("No files uploaded", { status: 400 });
     }
-
-    const bytes = await file.arrayBuffer();
-    const buffer = new Uint8Array(bytes);
 
     try {
       await ensureDir(IMAGES_DIR);
-      await Deno.writeFile(`${IMAGES_DIR}/${file.name}`, buffer);
-      return new Response("File uploaded successfully", { status: 200 });
+      const uploadedFiles = [];
+
+      for (const file of files) {
+        const bytes = await file.arrayBuffer();
+        const buffer = new Uint8Array(bytes);
+        await Deno.writeFile(`${IMAGES_DIR}/${file.name}`, buffer);
+        uploadedFiles.push(file.name);
+      }
+
+      return new Response(JSON.stringify({ message: "Files uploaded successfully", files: uploadedFiles }), {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+      });
     } catch (error) {
-      console.error("Error saving file:", error);
-      return new Response("Error saving file", { status: 500 });
+      console.error("Error saving files:", error);
+      return new Response("Error saving files", { status: 500 });
     }
   },
 };
