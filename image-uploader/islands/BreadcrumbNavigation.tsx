@@ -9,7 +9,7 @@ export function BreadcrumbNavigation({ currentPath, onNavigate }: BreadcrumbNavi
   const pathParts = currentPath.split("/").filter(Boolean);
 
   return (
-    <nav class="text-sm font-medium">
+    <nav class="text-lg font-medium mb-4">
       <ol class="list-none p-0 inline-flex">
         <li class="flex items-center">
           <a
@@ -18,14 +18,14 @@ export function BreadcrumbNavigation({ currentPath, onNavigate }: BreadcrumbNavi
               e.preventDefault();
               onNavigate("");
             }}
-            class="text-blue-500 hover:text-blue-700"
+            class="text-blue-500 hover:text-blue-700 text-xl"
           >
-            Root
+            /
           </a>
         </li>
         {pathParts.map((folder, index) => (
           <li key={index} class="flex items-center">
-            <span class="mx-2">/</span>
+            <span class="mx-2 text-gray-500">/</span>
             <a
               href="#"
               onClick={(e) => {

@@ -5,7 +5,7 @@ import { getImageMimeType } from "../../../../utils/imageUtils.ts";
 const IMAGES_DIR = "./user_uploads";
 
 export const handler: Handlers = {
-  async GET(req, ctx) {
+  async GET(_req, ctx) {
     const imagePath = ctx.params.path;
     const fullPath = join(IMAGES_DIR, imagePath);
 
